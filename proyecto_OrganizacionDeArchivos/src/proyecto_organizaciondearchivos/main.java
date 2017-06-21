@@ -12,7 +12,7 @@ package proyecto_organizaciondearchivos;
 public class main {
     public static void main(String[] args) {
         ArbolB x = new ArbolB();
-        for (int i = 1; i <= 10000; i++) {
+        for (int i = 1; i <= 1000000; i++) {
             x.insert(new indice(i,i));
         }
         x.print();

@@ -10,25 +10,26 @@ package proyecto_organizaciondearchivos;
  * @author milton
  */
 public class Record {
+
     private int id;
     private String name;
     private String birthdate;
     private float Salary;
     private char borrado;
     private int referencia;
-    
-    public Record(int id, String name, String birthdate,float Salary) {
+
+    public Record(int id, String name, String birthdate, float Salary) {
         this.id = id;
         this.name = name;
         this.birthdate = birthdate;
         this.Salary = Salary;
         this.borrado = '-';
         this.referencia = 0;
-        
+
     }
 
     Record() {
-        
+
     }
 
     public int getId() {
@@ -65,7 +66,6 @@ public class Record {
     public void setSalary(float Salary) {
         this.Salary = Salary;
     }
-    
 
     public char getBorrado() {
         return borrado;
@@ -82,19 +82,16 @@ public class Record {
     public void setReferencia(int referencia) {
         this.referencia = referencia;
     }
-    
-    public int sizeOf(){
-    int size = Integer.BYTES + Character.BYTES + Integer.BYTES + 
-            (Character.BYTES + name.length()) + (Character.BYTES + birthdate.length()) + Float.BYTES;
-    return size;
-    }
 
- 
+    public int sizeOf() {
+        int size = Character.BYTES + Integer.BYTES + Integer.BYTES
+                + (Character.BYTES + name.length()) + (Character.BYTES + birthdate.length()) + Float.BYTES;
+        return size;
+    }
 
     @Override
     public String toString() {
         return "Record{" + "id=" + id + ", name=" + name + ", birthday=" + birthdate + '}';
     }
 
-    
 }

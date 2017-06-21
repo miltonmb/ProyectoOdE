@@ -14,7 +14,7 @@ public class TDA_ARLF {
     private static LinkedList list;
     private static int header;
     private static final int headerSize = Integer.BYTES;
-    private static final int sizeOf = Integer.BYTES + Character.BYTES + Integer.BYTES + (Character.BYTES + 40) + (Character.BYTES + 10) + Float.BYTES;
+    //private static final int sizeOf = Integer.BYTES + Character.BYTES + Integer.BYTES + (Character.BYTES + 40) + (Character.BYTES + 10) + Float.BYTES;
 
     public TDA_ARLF(File file) throws IOException {
         this.file = file;
@@ -75,26 +75,28 @@ public class TDA_ARLF {
                     created = true;
                     flujo.seek(file.length());
                     flujo.writeChar(record.getBorrado());
-                    flujo.writeInt(record.getReferencia());
+                    flujo.writeInt(0);
                     flujo.writeInt(record.getId());
                     flujo.writeUTF(record.getName());
                     flujo.writeUTF(record.getBirthdate());
                     flujo.writeFloat(record.getSalary());
                     break;
                 } else {
-
+                    flujo.seek(0);
                     created = true;
                     int pos = (int) list.remove(0);
                     int ref = 0;
-                    flujo.seek((pos - 1) * record.sizeOf() + headerSize);
+                    flujo.seek(record.sizeOf()*1+pos + headerSize);
+                    System.out.println("RECORD"+record.sizeOf());
+                    System.out.println("FILEPOINTER"+flujo.getFilePointer());
                     flujo.readChar();
                     ref = flujo.readInt();
                     flujo.seek(0);
                     System.out.println(ref);
                     flujo.writeInt(ref);
-                    flujo.seek((pos - 1) * record.sizeOf() + headerSize);
+                    
                     flujo.writeChar(record.getBorrado());
-                    flujo.writeInt(record.getReferencia());
+                    flujo.writeInt(0);
                     flujo.writeInt(record.getId());
                     flujo.writeUTF(record.getName());
                     flujo.writeUTF(record.getBirthdate());
