@@ -12,16 +12,19 @@ package proyecto_organizaciondearchivos;
 public class Record {
     private int id;
     private String name;
-    private String birthday;
+    private String birthdate;
     private float Salary;
     private char borrado;
-    private int RRN_apuntador;
-    public Record(int id, String name, String birthday,float Salary) {
+    private int referencia;
+    
+    public Record(int id, String name, String birthdate,float Salary) {
         this.id = id;
         this.name = name;
-        this.birthday = birthday;
+        this.birthdate = birthdate;
         this.Salary = Salary;
         this.borrado = '-';
+        this.referencia = 0;
+        
     }
 
     Record() {
@@ -37,6 +40,9 @@ public class Record {
     }
 
     public String getName() {
+        for (int i = name.length(); i < 40; i++) {
+            name += " ";
+        }
         return name;
     }
 
@@ -44,12 +50,12 @@ public class Record {
         this.name = name;
     }
 
-    public String getBirthday() {
-        return birthday;
+    public String getBirthdate() {
+        return birthdate;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
     }
 
     public float getSalary() {
@@ -69,26 +75,25 @@ public class Record {
         this.borrado = borrado;
     }
 
-    public int getRRN_apuntador() {
-        return RRN_apuntador;
+    public int getReferencia() {
+        return referencia;
     }
 
-    public void setRRN_apuntador(int RRN_apuntador) {
-        this.RRN_apuntador = RRN_apuntador;
+    public void setReferencia(int referencia) {
+        this.referencia = referencia;
     }
-    
-    
-
     
     public int sizeOf(){
-        int size = Character.BYTES + Integer.BYTES + (Character.BYTES+this.getName().length())+ (Character.BYTES+this.getBirthday().length())+Float.BYTES;
-        return size;
+    int size = Integer.BYTES + Character.BYTES + Integer.BYTES + 
+            (Character.BYTES + name.length()) + (Character.BYTES + birthdate.length()) + Float.BYTES;
+    return size;
     }
-    
+
+ 
 
     @Override
     public String toString() {
-        return "Record{" + "id=" + id + ", name=" + name + ", birthday=" + birthday + '}';
+        return "Record{" + "id=" + id + ", name=" + name + ", birthday=" + birthdate + '}';
     }
 
     
