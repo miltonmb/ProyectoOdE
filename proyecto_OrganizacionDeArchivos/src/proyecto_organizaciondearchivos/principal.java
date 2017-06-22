@@ -1,26 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package proyecto_organizaciondearchivos;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author milton
- */
 public class principal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form NewJFrame
-     */
     private TDA_ARLF archivo;
 
     public principal() {
@@ -636,6 +622,18 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_searchMousePressed
 
     private void bt_searchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_searchMouseReleased
+        int idBuscar;
+        idBuscar = Integer.parseInt(this.txt_idSearch.getText());
+        try {
+            if (idBuscar == 0) {
+                JOptionPane.showMessageDialog(this, "Success!");
+            }
+        } catch (Exception e) {
+        }
+        this.txt_idSearch.setText("");
+        this.txt_nameSearch.setText("");
+        this.txt_birthdateSeach.setText("");
+        this.txt_salarySearch.setText("");
         bt_search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/find-iconNotPressed.png")));
     }//GEN-LAST:event_bt_searchMouseReleased
 
@@ -668,6 +666,28 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_modifyMousePressed
 
     private void bt_modifyMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_modifyMouseReleased
+        int idBuscar;
+        int id;
+        String name;
+        String birthdate;
+        float salary;
+        idBuscar = Integer.parseInt(this.txt_idSearchModify.getText());
+        id = Integer.parseInt(txt_idModify.getText());
+        name = txt_nameModify.getText();
+        birthdate = txt_birthdateModify.getText();
+        salary = Float.parseFloat(this.txt_salaryModify.getText());
+        try {
+            if (true) {
+                JOptionPane.showMessageDialog(this, "Success!");
+            }
+        } catch (Exception e) {
+
+        }
+        this.txt_idSearchModify.setText("");
+        this.txt_idModify.setText("");
+        this.txt_nameModify.setText("");
+        this.txt_birthdateModify.setText("");
+        this.txt_salaryModify.setText("");
         bt_modify.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/personButtonNotPressed.png")));
     }//GEN-LAST:event_bt_modifyMouseReleased
 
@@ -684,12 +704,18 @@ public class principal extends javax.swing.JFrame {
             }
         } catch (IOException ex) {
         }
+        this.txt_idDelete.setText("");
         bt_delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/personButtonNotPressed.png")));
     }//GEN-LAST:event_bt_deleteMouseReleased
 
     private void jtab_tabMenuStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jtab_tabMenuStateChanged
         if (jtab_tabMenu.getSelectedIndex() == 4) {
             archivo.listar((DefaultTableModel) this.jtable_listRecord.getModel());
+        }
+        if (jtab_tabMenu.getSelectedIndex() == 3) {
+            this.txt_nameSearch.setText("");
+            this.txt_birthdateSeach.setText("");
+            this.txt_salarySearch.setText("");
         }
     }//GEN-LAST:event_jtab_tabMenuStateChanged
 

@@ -1,4 +1,3 @@
-
 package proyecto_organizaciondearchivos;
 
 public class ArbolB {
@@ -9,7 +8,7 @@ public class ArbolB {
         root = new Node();
         root.isLeaf = true;
         root.numberOfNodes = 0;
-        root.key[0] = new indice(-1,0);
+        root.key[0] = new indice(-1, 0);
     }
 
     public void insert(indice k) {
@@ -21,13 +20,13 @@ public class ArbolB {
             s.isLeaf = false;
             s.children[0] = r;
             split(s, 1, r);
-            Insert(s, k);
+            insert(s, k);
         } else {
-            Insert(r, k);
+            insert(r, k);
         }
     }
 
-    private void Insert(Node node, indice value) {
+    private void insert(Node node, indice value) {
         int i = node.numberOfNodes;
         if (node.isLeaf) {
             while (i >= 1 && value.getId() < node.key[i - 1].getId()) {
@@ -47,7 +46,7 @@ public class ArbolB {
                     i++;
                 }
             }
-            Insert(node.children[i - 1], value);
+            insert(node.children[i - 1], value);
         }
     }
 
@@ -72,9 +71,9 @@ public class ArbolB {
 
     public void print() {
         printBtree(root, "");
-        
-    }   
-    
+
+    }
+
     private void printBtree(Node node, String indent) {
         if (node == null) {
             System.out.println(indent + "The B-Tree is Empty");
@@ -82,16 +81,35 @@ public class ArbolB {
             System.out.println(indent + " ");
             String childIndent = indent + "\t";
             for (int i = node.numberOfNodes - 1; i >= 0; i--) {
-                if (!node.isLeaf){
+                if (!node.isLeaf) {
                     printBtree(node.children[i], childIndent);
                 }
                 if (node.key[i].getId() > 0) {
                     System.out.println(childIndent + node.key[i].getId());
                 }
             }
-            if (!node.isLeaf){
+            if (!node.isLeaf) {
                 printBtree(node.children[node.numberOfNodes], childIndent);
             }
         }
+    }
+
+    public boolean search(int k) {
+        Node x = root;
+        return search(x, k);
+    }
+
+    private boolean search(Node node, int value) {
+        int i = 1;
+        while (i <= node.numberOfNodes && value > node.key[i - 1].getId()) {
+            i++;
+        }
+        if (i <= node.numberOfNodes && value == node.key[i - 1].getId()) {
+            return true;
+        }
+        if (!node.isLeaf) {
+            return search(node.children[i - 1], value);
+        }
+        return false;
     }
 }

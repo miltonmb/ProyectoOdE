@@ -84,8 +84,7 @@ public class Record {
     }
 
     public int sizeOf() {
-        int size = Character.BYTES + Integer.BYTES + Integer.BYTES
-                + (Character.BYTES + name.length()) + (Character.BYTES + birthdate.length()) + Float.BYTES;
+        int size = 68;
         return size;
     }
 

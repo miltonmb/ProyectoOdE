@@ -25,7 +25,6 @@ public class TDA_ARLF {
         list = new LinkedList();
         flujo.seek(0);
         //flujo.writeInt(-1);
-
         try {
             if (file.length() > 0) {
                 header = flujo.readInt();
@@ -34,36 +33,21 @@ public class TDA_ARLF {
                     Record record = new Record();
                     flujo.seek(0 + headerSize);
                     while (true) {
-                        System.out.println(flujo.getFilePointer());
-                        record.setBorrado(flujo.readChar());
-                        record.setReferencia(flujo.readInt());
-                        record.setId(flujo.readInt());
-                        System.out.println(record.getId());
-                        record.setName(flujo.readUTF());
-                        System.out.println(record.getName());
-                        record.setBirthdate(flujo.readUTF());
-                        record.setSalary(flujo.readFloat());
-                        System.out.println(record.getBirthdate());
                         flujo.seek((header - 1) * record.sizeOf() + headerSize);
                         flujo.readChar();
                         header = flujo.readInt();
-                        System.out.println(header);
-                        if(header != -1){
-                            list.add(0,header);
+                        //System.out.println(header);
+                        if (header != -1) {
+                            list.add(0, header);
                         }
                     }
                 }
             } else {
-                System.out.println("ENTRO AQUI");
                 flujo.writeInt(-1);
             }
         } catch (Exception e) {
-        }
-        System.out.println("AQUI JEJE");
-        for (Object object : list) {
-            System.out.println("RRN:" + (int) object);
-        }
 
+        }
     }
 
     public boolean insert(Record record) {
@@ -86,15 +70,14 @@ public class TDA_ARLF {
                     created = true;
                     int pos = (int) list.remove(0);
                     int ref = 0;
-                    flujo.seek(record.sizeOf()*1+pos + headerSize);
-                    System.out.println("RECORD"+record.sizeOf());
-                    System.out.println("FILEPOINTER"+flujo.getFilePointer());
+                    flujo.seek(record.sizeOf() * (pos - 1) + headerSize);
+                    //System.out.println("RECORD" + record.sizeOf());
+                    //System.out.println("FILEPOINTER" + flujo.getFilePointer());
                     flujo.readChar();
                     ref = flujo.readInt();
                     flujo.seek(0);
-                    System.out.println(ref);
                     flujo.writeInt(ref);
-                    
+                    flujo.seek(record.sizeOf() * (pos - 1) + headerSize);
                     flujo.writeChar(record.getBorrado());
                     flujo.writeInt(0);
                     flujo.writeInt(record.getId());
@@ -115,20 +98,19 @@ public class TDA_ARLF {
         Record record = new Record();
         boolean found = false;
         int rrn = 0;
-        long fp = 0;
         try {
             flujo.seek(0 + headerSize);
             while (true) {
-                System.out.println(flujo.getFilePointer());
+                //System.out.println(flujo.getFilePointer());
                 record.setBorrado(flujo.readChar());
                 record.setReferencia(flujo.readInt());
                 record.setId(flujo.readInt());
-                System.out.println(record.getId());
+                //System.out.println(record.getId());
                 record.setName(flujo.readUTF());
-                System.out.println(record.getName());
+                //System.out.println(record.getName());
                 record.setBirthdate(flujo.readUTF());
                 record.setSalary(flujo.readFloat());
-                System.out.println(record.getBirthdate());
+                //System.out.println(record.getBirthdate());
                 rrn++;
                 if (record.getBorrado() != '*') {
                     if (record.getId() == id) {
@@ -136,12 +118,11 @@ public class TDA_ARLF {
                         record.setBorrado('*');
                         flujo.seek(0);
                         header = flujo.readInt();
-                        System.out.println("ESTE ES EL HEADER:" + header);
                         if (header == -1) {
                             flujo.seek(0);
                             flujo.writeInt(rrn);
                             flujo.seek((rrn - 1) * record.sizeOf() + headerSize);
-                            System.out.println("FILEPOINTER" + flujo.getFilePointer());
+                            //System.out.println("FILEPOINTER" + flujo.getFilePointer());
                             flujo.writeChar(record.getBorrado());
                             flujo.writeInt(header);
                             flujo.writeInt(record.getId());
@@ -149,12 +130,12 @@ public class TDA_ARLF {
                             flujo.writeUTF(record.getBirthdate());
                             flujo.writeFloat(record.getSalary());
                             list.add(0, rrn);
-                            System.out.println("AQUI ENTRA");
+                            //System.out.println("AQUI ENTRA");
                         } else {
                             flujo.seek(0);
                             flujo.writeInt(rrn);
                             flujo.seek((rrn - 1) * record.sizeOf() + headerSize);
-                            System.out.println("FILEPOINTER" + flujo.getFilePointer());
+                            //System.out.println("FILEPOINTER" + flujo.getFilePointer());
                             flujo.writeChar(record.getBorrado());
                             flujo.writeInt(header);
                             flujo.writeInt(record.getId());
@@ -180,16 +161,16 @@ public class TDA_ARLF {
             Record record = new Record();
             flujo.seek(0 + headerSize);
             while (true) {
-                System.out.println(flujo.getFilePointer());
+                //System.out.println(flujo.getFilePointer());
                 record.setBorrado(flujo.readChar());
                 record.setReferencia(flujo.readInt());
                 record.setId(flujo.readInt());
-                System.out.println(record.getId());
+                //System.out.println(record.getId());
                 record.setName(flujo.readUTF());
-                System.out.println(record.getName());
+                //System.out.println(record.getName());
                 record.setBirthdate(flujo.readUTF());
                 record.setSalary(flujo.readFloat());
-                System.out.println(record.getBirthdate());
+                //System.out.println(record.getBirthdate());
                 if (record.getBorrado() != '*') {
                     model.addRow(new Object[]{record.getId(), record.getName(), record.getBirthdate(), record.getSalary()});
                 }
