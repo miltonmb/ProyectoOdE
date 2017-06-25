@@ -10,7 +10,6 @@ package proyecto_organizaciondearchivos;
  * @author milton
  */
 public class Record {
-
     private int id;
     private String name;
     private String birthdate;

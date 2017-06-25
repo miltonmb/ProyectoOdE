@@ -1,6 +1,8 @@
 package proyecto_organizaciondearchivos;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -13,6 +15,9 @@ public class principal extends javax.swing.JFrame {
         initComponents();
         try {
             archivo = new TDA_ARLF(new File("./Archivo.dat"));
+            if (archivo.cargar()) {
+
+            }
         } catch (IOException ex) {
 
         }
@@ -37,6 +42,7 @@ public class principal extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
+        bt_agregardiezmilregistros = new javax.swing.JButton();
         jp_modify = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         txt_idModify = new javax.swing.JTextField();
@@ -84,6 +90,11 @@ public class principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Person information system");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jtab_tabMenu.setBackground(new java.awt.Color(12, 190, 4));
         jtab_tabMenu.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -116,6 +127,7 @@ public class principal extends javax.swing.JFrame {
 
         bt_add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/personButtonNotPressed.png"))); // NOI18N
         bt_add.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        bt_add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         bt_add.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 bt_addMousePressed(evt);
@@ -134,6 +146,13 @@ public class principal extends javax.swing.JFrame {
         jLabel22.setFont(new java.awt.Font("Noto Sans", 1, 14)); // NOI18N
         jLabel22.setText("> Add");
 
+        bt_agregardiezmilregistros.setText("AGREGAR ");
+        bt_agregardiezmilregistros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_agregardiezmilregistrosMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -143,7 +162,9 @@ public class principal extends javax.swing.JFrame {
                 .addComponent(jLabel21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel22)
-                .addContainerGap(322, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bt_agregardiezmilregistros)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,8 +172,9 @@ public class principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(jLabel22))
-                .addContainerGap(71, Short.MAX_VALUE))
+                    .addComponent(jLabel22)
+                    .addComponent(bt_agregardiezmilregistros))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jp_AddLayout = new javax.swing.GroupLayout(jp_Add);
@@ -181,7 +203,7 @@ public class principal extends javax.swing.JFrame {
                         .addComponent(txt_addId)))
                 .addGap(18, 18, 18)
                 .addComponent(bt_add, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jp_AddLayout.setVerticalGroup(
             jp_AddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +230,7 @@ public class principal extends javax.swing.JFrame {
                     .addGroup(jp_AddLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bt_add, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         jtab_tabMenu.addTab("Add       ", new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/index.png")), jp_Add); // NOI18N
@@ -232,6 +254,7 @@ public class principal extends javax.swing.JFrame {
 
         bt_modify.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/personButtonNotPressed.png"))); // NOI18N
         bt_modify.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        bt_modify.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         bt_modify.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 bt_modifyMousePressed(evt);
@@ -333,7 +356,7 @@ public class principal extends javax.swing.JFrame {
                     .addGroup(jp_modifyLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bt_modify, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         jtab_tabMenu.addTab("Modify", new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/index.png")), jp_modify); // NOI18N
@@ -410,7 +433,7 @@ public class principal extends javax.swing.JFrame {
                     .addGroup(jp_deleteLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bt_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 46, Short.MAX_VALUE))
+                .addGap(0, 75, Short.MAX_VALUE))
         );
 
         jtab_tabMenu.addTab("Delete ", new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/erase.png")), jp_delete); // NOI18N
@@ -419,6 +442,7 @@ public class principal extends javax.swing.JFrame {
 
         bt_search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/find-iconNotPressed.png"))); // NOI18N
         bt_search.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        bt_search.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         bt_search.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 bt_searchMousePressed(evt);
@@ -530,7 +554,7 @@ public class principal extends javax.swing.JFrame {
                     .addGroup(jp_searchLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bt_search)))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         jtab_tabMenu.addTab("Search", new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/nav_search.png")), jp_search); // NOI18N
@@ -610,7 +634,9 @@ public class principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jtab_tabMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jtab_tabMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -625,15 +651,17 @@ public class principal extends javax.swing.JFrame {
         int idBuscar;
         idBuscar = Integer.parseInt(this.txt_idSearch.getText());
         try {
-            if (idBuscar == 0) {
-                JOptionPane.showMessageDialog(this, "Success!");
+            if (archivo.search(idBuscar) != null) {
+                Record neo = archivo.search(idBuscar);
+                this.txt_nameSearch.setText(neo.getName());
+                this.txt_birthdateSeach.setText(neo.getBirthdate());
+                this.txt_salarySearch.setText(neo.getSalary() + "");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error!");
             }
         } catch (Exception e) {
+
         }
-        this.txt_idSearch.setText("");
-        this.txt_nameSearch.setText("");
-        this.txt_birthdateSeach.setText("");
-        this.txt_salarySearch.setText("");
         bt_search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/find-iconNotPressed.png")));
     }//GEN-LAST:event_bt_searchMouseReleased
 
@@ -648,6 +676,8 @@ public class principal extends javax.swing.JFrame {
         salary = Float.parseFloat(this.txt_addSalary.getText());
         if (archivo.insert(new Record(id, name, birthdate, salary))) {
             JOptionPane.showMessageDialog(this, "Success!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error!");
         }
         this.txt_addId.setText("");
         this.txt_AddBirthdate.setText("");
@@ -677,8 +707,10 @@ public class principal extends javax.swing.JFrame {
         birthdate = txt_birthdateModify.getText();
         salary = Float.parseFloat(this.txt_salaryModify.getText());
         try {
-            if (true) {
+            if (archivo.modify(new Record(id, name, birthdate, salary), idBuscar)) {
                 JOptionPane.showMessageDialog(this, "Success!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error!");
             }
         } catch (Exception e) {
 
@@ -701,6 +733,8 @@ public class principal extends javax.swing.JFrame {
         try {
             if (archivo.delete(id)) {
                 JOptionPane.showMessageDialog(this, "Success!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error!");
             }
         } catch (IOException ex) {
         }
@@ -719,6 +753,30 @@ public class principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtab_tabMenuStateChanged
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        archivo.escribir();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void bt_agregardiezmilregistrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_agregardiezmilregistrosMouseClicked
+        try {
+            FileReader in = new FileReader(new File("records.txt"));
+            BufferedReader reader = new BufferedReader(in);
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains(",")) {
+                    String[] records = line.split(",");
+                    int id=Integer.parseInt(records[0]);
+                    String name = records[1];
+                    String bd = records[2];
+                    float salary= Float.parseFloat(records[3]);
+                    archivo.insert(new Record(id,name,bd,salary));
+                }
+            }
+
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_bt_agregardiezmilregistrosMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -733,16 +791,24 @@ public class principal extends javax.swing.JFrame {
                 if ("GTK+".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -757,6 +823,7 @@ public class principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bt_add;
+    private javax.swing.JButton bt_agregardiezmilregistros;
     private javax.swing.JLabel bt_delete;
     private javax.swing.JLabel bt_modify;
     private javax.swing.JLabel bt_search;

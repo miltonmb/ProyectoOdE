@@ -1,7 +1,18 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package proyecto_organizaciondearchivos;
 
-public class ArbolB {
+import java.io.Serializable;
 
+/**
+ *
+ * @author milton
+ */
+public class ArbolB implements Serializable {
+    private static final long SerialVersionUID = 666L;
     private Node root;
 
     public ArbolB() {
@@ -94,21 +105,48 @@ public class ArbolB {
         }
     }
 
-    public boolean search(int k) {
+    public indice search(int k) {
         Node x = root;
         return search(x, k);
     }
 
-    private boolean search(Node node, int value) {
+    private indice search(Node node, int value) {
         int i = 1;
         while (i <= node.numberOfNodes && value > node.key[i - 1].getId()) {
             i++;
         }
         if (i <= node.numberOfNodes && value == node.key[i - 1].getId()) {
-            return true;
+            return node.key[i - 1];
         }
         if (!node.isLeaf) {
             return search(node.children[i - 1], value);
+        }
+        return null;
+    }
+
+    public boolean delete(int k) {
+        Node x = root;
+        return delete(x, k);
+    }
+    public boolean delete(Node node, int value) {
+        int i = 1;
+        while (i <= node.numberOfNodes && value > node.key[i - 1].getId()) {
+            i++;
+        }
+        if (node.isLeaf) {
+            if (i <= node.numberOfNodes && value == node.key[i - 1].getId()) {
+                node.key[i - 1].setId(0);
+                node.key[i - 1].setRrn(0);
+                for (int j = i - 1; j < node.numberOfNodes - 1; j++) {
+                    node.key[j] = node.key[j + 1];
+                    if (j + 1 == node.numberOfNodes - 1) {
+                        node.numberOfNodes--;
+                    }
+                }
+                return true;
+            }
+        } else {
+            return delete(node.children[i - 1], value);
         }
         return false;
     }
