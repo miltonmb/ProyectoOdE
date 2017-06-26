@@ -108,8 +108,6 @@ public class TDA_ARLF {
         boolean found = false;
         indice rrn = new indice();
         rrn = arbolito.search(id);
-        System.out.println(rrn.getId());
-        System.out.println(rrn.getRrn());
         try {
             if (rrn == null) {
                 return found;

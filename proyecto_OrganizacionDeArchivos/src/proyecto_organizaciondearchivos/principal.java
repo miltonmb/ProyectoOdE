@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -660,7 +662,7 @@ public class principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Error!");
             }
         } catch (Exception e) {
-
+            JOptionPane.showMessageDialog(this, "Error!");
         }
         bt_search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/find-iconNotPressed.png")));
     }//GEN-LAST:event_bt_searchMouseReleased
@@ -713,7 +715,7 @@ public class principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Error!");
             }
         } catch (Exception e) {
-
+            JOptionPane.showMessageDialog(this, "Error!");
         }
         this.txt_idSearchModify.setText("");
         this.txt_idModify.setText("");
@@ -737,6 +739,7 @@ public class principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Error!");
             }
         } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error!");
         }
         this.txt_idDelete.setText("");
         bt_delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_organizaciondearchivos/Images/personButtonNotPressed.png")));
@@ -765,11 +768,11 @@ public class principal extends javax.swing.JFrame {
             while ((line = reader.readLine()) != null) {
                 if (line.contains(",")) {
                     String[] records = line.split(",");
-                    int id=Integer.parseInt(records[0]);
+                    int id = Integer.parseInt(records[0]);
                     String name = records[1];
                     String bd = records[2];
-                    float salary= Float.parseFloat(records[3]);
-                    archivo.insert(new Record(id,name,bd,salary));
+                    float salary = Float.parseFloat(records[3]);
+                    archivo.insert(new Record(id, name, bd, salary));
                 }
             }
 

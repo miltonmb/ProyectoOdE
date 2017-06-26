@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author milton
  */
 public class ArbolB implements Serializable {
+
     private static final long SerialVersionUID = 666L;
     private Node root;
 
@@ -62,47 +63,22 @@ public class ArbolB implements Serializable {
     }
 
     private void split(Node parentNode, int childIndex, Node newChild) {
-        Node z = new Node();
-        z.isLeaf = newChild.isLeaf;
-        z.numberOfNodes = 1;
-        z.key[0] = newChild.key[2];
+        Node node = new Node();
+        node.isLeaf = newChild.isLeaf;
+        node.numberOfNodes = 1;
+        node.key[0] = newChild.key[2];
         if (!newChild.isLeaf) {
-            z.children[1] = newChild.children[3];
-            z.children[0] = newChild.children[2];
+            node.children[1] = newChild.children[3];
+            node.children[0] = newChild.children[2];
         }
         newChild.numberOfNodes = 1;
         for (int j = parentNode.numberOfNodes + 1; j >= childIndex + 1; j--) {
             parentNode.children[j] = parentNode.children[j - 1];
             parentNode.key[j - 1] = parentNode.key[j - 2];
         }
-        parentNode.children[childIndex] = z;
+        parentNode.children[childIndex] = node;
         parentNode.key[childIndex - 1] = newChild.key[1];
         parentNode.numberOfNodes++;
-    }
-
-    public void print() {
-        printBtree(root, "");
-
-    }
-
-    private void printBtree(Node node, String indent) {
-        if (node == null) {
-            System.out.println(indent + "The B-Tree is Empty");
-        } else {
-            System.out.println(indent + " ");
-            String childIndent = indent + "\t";
-            for (int i = node.numberOfNodes - 1; i >= 0; i--) {
-                if (!node.isLeaf) {
-                    printBtree(node.children[i], childIndent);
-                }
-                if (node.key[i].getId() > 0) {
-                    System.out.println(childIndent + node.key[i].getId());
-                }
-            }
-            if (!node.isLeaf) {
-                printBtree(node.children[node.numberOfNodes], childIndent);
-            }
-        }
     }
 
     public indice search(int k) {
@@ -128,6 +104,7 @@ public class ArbolB implements Serializable {
         Node x = root;
         return delete(x, k);
     }
+
     public boolean delete(Node node, int value) {
         int i = 1;
         while (i <= node.numberOfNodes && value > node.key[i - 1].getId()) {
@@ -135,8 +112,8 @@ public class ArbolB implements Serializable {
         }
         if (node.isLeaf) {
             if (i <= node.numberOfNodes && value == node.key[i - 1].getId()) {
-                node.key[i - 1].setId(0);
-                node.key[i - 1].setRrn(0);
+                node.key[i-1].setId(0);
+                node.key[i-1].setRrn(0);
                 for (int j = i - 1; j < node.numberOfNodes - 1; j++) {
                     node.key[j] = node.key[j + 1];
                     if (j + 1 == node.numberOfNodes - 1) {
